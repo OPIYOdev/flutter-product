@@ -43,8 +43,6 @@ class _ChatInputBarState extends State<ChatInputBar> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
-
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.background,
@@ -52,11 +50,11 @@ class _ChatInputBarState extends State<ChatInputBar> {
           top: BorderSide(color: AppTheme.border, width: 1),
         ),
       ),
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
         left: 16,
         right: 12,
         top: 10,
-        bottom: 10 + bottomPadding,
+        bottom: 10,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,

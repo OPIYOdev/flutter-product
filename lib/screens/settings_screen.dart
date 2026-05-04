@@ -45,9 +45,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: const Text('Settings'),
         leading: BackButton(color: AppTheme.textSecondary),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: [
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWide = constraints.maxWidth > 600;
+          
+          return Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: isWide ? 600 : double.infinity,
+              ),
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
           _SectionHeader('AI Behaviour'),
           const SizedBox(height: 12),
           _label('AI Provider & Model'),
@@ -163,7 +172,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: TextStyle(color: AppTheme.textMuted, fontSize: 11),
             ),
           ),
-        ],
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

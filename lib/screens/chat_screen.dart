@@ -42,34 +42,43 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: AppTheme.background,
       drawer: const HistoryDrawer(),
       appBar: _AppBar(),
-      body: Consumer<ChatController>(
-        builder: (context, ctrl, _) {
-          final messages = ctrl.messages;
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWide = constraints.maxWidth > 600;
+          
+          return Consumer<ChatController>(
+            builder: (context, ctrl, _) {
+              final messages = ctrl.messages;
 
-          if (messages.isNotEmpty) _scrollToBottom();
+              if (messages.isNotEmpty) _scrollToBottom();
 
-          return Column(
-            children: [
-              Expanded(
-                child: messages.isEmpty
-                    ? _EmptyState(
-                        onSuggestionTap: (s) => ctrl.sendMessage(s),
-                      )
-                    : ListView.builder(
-                        controller: _scrollCtrl,
-                        padding: const EdgeInsets.only(top: 16, bottom: 8),
-                        itemCount: messages.length,
-                        itemBuilder: (_, i) {
-                          final msg = messages[i];
-                          return GestureDetector(
-                            onTap: msg.status == MessageStatus.error
-                                ? ctrl.retryLastMessage
-                                : null,
-                            child: MessageBubble(message: msg),
-                          );
-                        },
+              return Center(
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: isWide ? 800 : double.infinity,
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: messages.isEmpty
+                            ? _EmptyState(
+                                onSuggestionTap: (s) => ctrl.sendMessage(s),
+                              )
+                            : ListView.builder(
+                                controller: _scrollCtrl,
+                                padding: const EdgeInsets.only(top: 16, bottom: 8),
+                                itemCount: messages.length,
+                                itemBuilder: (_, i) {
+                                  final msg = messages[i];
+                                  return GestureDetector(
+                                    onTap: msg.status == MessageStatus.error
+                                        ? ctrl.retryLastMessage
+                                        : null,
+                                    child: MessageBubble(message: msg),
+                                  );
+                                },
+                              ),
                       ),
-              ),
 
               // Error banner
               if (ctrl.errorMessage.isNotEmpty)
@@ -78,11 +87,15 @@ class _ChatScreenState extends State<ChatScreen> {
                   onRetry: ctrl.retryLastMessage,
                 ),
 
-              ChatInputBar(
-                isGenerating: ctrl.isGenerating,
-                onSend: ctrl.sendMessage,
-              ),
-            ],
+                      ChatInputBar(
+                        isGenerating: ctrl.isGenerating,
+                        onSend: ctrl.sendMessage,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

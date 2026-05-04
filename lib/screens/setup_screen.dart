@@ -74,7 +74,7 @@ class _SetupScreenState extends State<SetupScreen>
           opacity: _fadeAnim,
           child: SlideTransition(
             position: _slideAnim,
-            child: Padding(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +234,7 @@ class _SetupScreenState extends State<SetupScreen>
                     ),
                   ),
 
-                  const Spacer(),
+                  const SizedBox(height: 40),
 
                   // Continue button
                   SizedBox(
