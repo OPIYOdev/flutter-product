@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/chat_message.dart';
-import '../services/grok_service.dart';
+import '../services/ai_service.dart';
 import '../services/storage_service.dart';
 
 enum AppState { setup, ready, loading }
@@ -31,6 +31,9 @@ class ChatController extends ChangeNotifier {
   String _systemPrompt =
       'You are a helpful, concise, and friendly AI assistant. Respond clearly and accurately.';
   String get systemPrompt => _systemPrompt;
+
+  String get baseUrl => _aiService?.baseUrl ?? AiProvider.grok2.baseUrl;
+  String get model => _aiService?.model ?? AiProvider.grok2.defaultModel;
 
   AiService? _aiService;
 
@@ -83,6 +86,12 @@ class ChatController extends ChangeNotifier {
     _systemPrompt = prompt;
     await _storage.saveSystemPrompt(prompt);
     _initService();
+    notifyListeners();
+  }
+
+  Future<void> updateProvider(AiProvider provider, {String? customModel}) async {
+    await _storage.saveProvider(provider, customModel: customModel);
+    await _initService();
     notifyListeners();
   }
 

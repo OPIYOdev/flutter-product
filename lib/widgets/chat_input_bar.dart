@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/chat_controller.dart';
 import '../theme/app_theme.dart';
 
 class ChatInputBar extends StatefulWidget {
@@ -77,10 +79,10 @@ class _ChatInputBarState extends State<ChatInputBar> {
                   fontSize: 15,
                   height: 1.45,
                 ),
-                decoration: const InputDecoration(
-                  hintText: 'Message Grok…',
+                decoration: InputDecoration(
+                  hintText: 'Message ${context.read<ChatController>().model.contains('grok') ? 'Grok' : 'AI'}…',
                   hintStyle:
-                      TextStyle(color: AppTheme.textMuted, fontSize: 15),
+                      const TextStyle(color: AppTheme.textMuted, fontSize: 15),
                   border: InputBorder.none,
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 18, vertical: 12),

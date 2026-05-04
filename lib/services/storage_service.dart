@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:grok_chat_template/services/grok_service.dart';
+import 'package:grok_chat_template/services/ai_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/chat_message.dart';
 
@@ -49,8 +49,8 @@ class StorageService {
   Future<Map<String, String>> getProviderConfig() async {
     final prefs = await SharedPreferences.getInstance();
     return {
-      'baseUrl': prefs.getString(_baseUrlKey) ?? AiProvider.xai.baseUrl,
-      'model': prefs.getString(_modelKey) ?? AiProvider.xai.defaultModel,
+      'baseUrl': prefs.getString(_baseUrlKey) ?? AiProvider.grok2.baseUrl,
+      'model': prefs.getString(_modelKey) ?? AiProvider.grok2.defaultModel,
     };
   }
 

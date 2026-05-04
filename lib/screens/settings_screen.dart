@@ -50,6 +50,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           _SectionHeader('AI Behaviour'),
           const SizedBox(height: 12),
+          _label('AI Provider & Model'),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: AppTheme.surface,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppTheme.border),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<AiProvider>(
+                value: AiProvider.all.firstWhere(
+                  (p) => p.baseUrl == ctrl.baseUrl,
+                  orElse: () => AiProvider.grok2,
+                ),
+                dropdownColor: AppTheme.surfaceElevated,
+                isExpanded: true,
+                icon: const Icon(Icons.keyboard_arrow_down_rounded,
+                    color: AppTheme.textMuted),
+                items: AiProvider.all.map((p) {
+                  return DropdownMenuItem(
+                    value: p,
+                    child: Text(p.name,
+                        style: const TextStyle(
+                            color: AppTheme.textPrimary, fontSize: 14)),
+                  );
+                }).toList(),
+                onChanged: (p) async {
+                  if (p != null) {
+                    await context.read<ChatController>().updateProvider(p);
+                  }
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           _label('System Prompt'),
           const SizedBox(height: 8),
           Container(
@@ -115,7 +151,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'Grok Chat Template v1.0.0',
+              'AI Chat Template v1.0.0',
               style: const TextStyle(
                   color: AppTheme.textMuted, fontSize: 12),
             ),
@@ -123,7 +159,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 8),
           const Center(
             child: Text(
-              'Built with Flutter + xAI Grok API',
+              'Built with Flutter + Multiple AI Providers',
               style: TextStyle(color: AppTheme.textMuted, fontSize: 11),
             ),
           ),

@@ -107,9 +107,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Column(
         children: [
-          const Text(
-            'Grok',
-            style: TextStyle(
+          Text(
+            ctrl.model.contains('grok') ? 'Grok' : 'AI Chat',
+            style: const TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w600,
               color: AppTheme.textPrimary,
@@ -192,9 +192,11 @@ class _EmptyState extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          const Text(
-            'Ask me anything — I\'m powered by Grok.',
-            style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
+          Consumer<ChatController>(
+            builder: (context, ctrl, _) => Text(
+              'Ask me anything — I\'m powered by ${ctrl.model.contains('grok') ? 'Grok' : 'AI'}.',
+              style: const TextStyle(fontSize: 14, color: AppTheme.textSecondary),
+            ),
           ),
           const SizedBox(height: 32),
           Wrap(

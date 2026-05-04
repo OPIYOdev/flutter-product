@@ -25,10 +25,16 @@ class AiProvider {
     required this.defaultModel,
   });
 
-  static const xai = AiProvider(
-    name: 'xAI Grok',
+  static const grok2 = AiProvider(
+    name: 'xAI Grok 2',
     baseUrl: 'https://api.x.ai/v1',
-    defaultModel: 'grok-3-mini',
+    defaultModel: 'grok-2-latest',
+  );
+
+  static const grok3 = AiProvider(
+    name: 'xAI Grok 3',
+    baseUrl: 'https://api.x.ai/v1',
+    defaultModel: 'grok-3-latest',
   );
 
   static const openai = AiProvider(
@@ -49,7 +55,7 @@ class AiProvider {
     defaultModel: 'llama3-8b-8192',
   );
 
-  static const List<AiProvider> all = [xai, openai, openrouter, groq];
+  static const List<AiProvider> all = [grok2, grok3, openai, openrouter, groq];
 }
 
 class AiService {

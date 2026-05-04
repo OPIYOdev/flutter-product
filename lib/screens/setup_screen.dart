@@ -97,14 +97,14 @@ class _SetupScreenState extends State<SetupScreen>
                   ),
                   const SizedBox(height: 28),
                   Text(
-                    'Connect to\nGrok AI',
+                    'Connect to\nAI Services',
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                           height: 1.15,
                         ),
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Enter your xAI API key to get started.\nYour key is stored only on this device.',
+                    'Enter your API key to get started.\nYour key is stored only on this device.',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           height: 1.6,
                         ),
